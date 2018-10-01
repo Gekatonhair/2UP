@@ -1,7 +1,6 @@
 /*export default */
 class VkModule {
-    constructor(appId) {
-        const _this = this;
+    constructor(appId) {       
         this.authDiv = document.getElementById('vk_auth');
 
         VK.init({
@@ -39,7 +38,7 @@ class VkModule {
 
 
     getFriendsData() {
-            return new Promise(function(resolve, reject) {                   
+            return new Promise((resolve, reject) => {                   
                     VK.Api.call(
                             "friends.get", {
                                 order: "bdate",

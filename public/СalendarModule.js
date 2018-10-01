@@ -47,6 +47,7 @@ class CalendarModule {
             }
             _this.changeMonth(newMonth);
         };
+
     }
 
     selectYear(year) {
@@ -56,20 +57,20 @@ class CalendarModule {
         return this.year;
     }
 
-    selectMonth(month) {//number
+    selectMonth(month) {
         this.month = month - 0;
     }
     getSelectedMonth() {
-        return this.month;//number
+        return this.month;
     }
 
-    fillDaysMonths() {//fill calenadar data on select year
+    fillDaysMonths() {//fill calenadar data 
         const calendarYear = this.year;
         for (let i = 0; i < 12; i++) {
             const month = new Date(calendarYear, i);
             let monthObj = {
                 monthName: getMonthNameByNumber(i),
-                monthNumber: i+1,//number start from 1
+                monthNumber: i + 1,//number start from 1
                 days: [],
                 year: calendarYear
             };
@@ -90,7 +91,7 @@ class CalendarModule {
         let calendarBody = document.getElementById('calendarBody');
 
         for (let month of data) {
-            const monthDiv = document.createElement('div');
+            let monthDiv = document.createElement('div');
             monthDiv.className = "month";
             monthDiv.name = month.monthName;
             calendarBody.appendChild(monthDiv);
@@ -132,36 +133,31 @@ class CalendarModule {
         let calendarBody = document.getElementById('calendarBody');
         let monthDivs = calendarBody.childNodes;
 
-        for (let month of this.data) {   
-            let monthDiv = monthDivs[month.monthNumber-1];           
+        for (let month of this.data) {
+            let monthDiv = monthDivs[month.monthNumber - 1];
             let dayDivs = monthDiv.childNodes;
             for (let day of month.days) {
-                let dayDiv = dayDivs[day.dayNumber-1];
-                for (let friend of day.friends) {                                                            
-                    let className;
-                    if (day.friends.length > 1) {
-                        className = 'little';
-                    } else {
-                        className = 'big';
-                    }
-                    let img = new Image();
-                    img.src = friend.photo_50;
-
+                let dayDiv = dayDivs[day.dayNumber - 1];
+                let countFriend = day.friends.length;
+                for (let friend of day.friends) {
                     let link = document.createElement('a');
                     link.target = '_blank';
-                    link.className = className;
-                    link.appendChild(img);
+                    link.className = 'vkPhoto';
                     link.title = `${friend.first_name} ${friend.last_name}`;
                     link.href = `https://vk.com/${friend.domain}`;
-                    dayDiv.appendChild(link);
-                    if (day.friends.length > 3) {
-                        break; //**      
-                    }
-                }//#for friend
+
+                    let size = 52/countFriend;
+                    let img = new Image();
+                    img.src = friend.photo_50;
+                    img.width = size;
+                    img.height = size;
+                    link.appendChild(img);
+
+                    dayDiv.appendChild(link); 
+                }
             }//#for day
         }//#for month
     }//#drawVkBd 
-
 
     changeMonth(monthNumber) {
         this.selectMonth(monthNumber);

@@ -15,7 +15,20 @@
             position: absolute;
             margin: 10% calc(50% - 100px);           
         }
-        
+                
+        .showMore{           
+            text-align: center;
+            font-size: 2em;
+            border: 1px solid grey;
+            border-radius: 2px;
+            width: 80%;
+            margin: 10px 10%;
+            cursor: pointer;
+        }
+        .morePhoto{
+            position: absolute;
+        }
+
         #calendar {
             height: 500px;
             width: 600px;
@@ -78,22 +91,14 @@
         
         .day>p {
             height: 1em;
-            width: 2em;
+            width: 80%;
             margin: 0px;
             padding: 2px 0 0 5px;
+            text-align: right;
         }
         
-        a.big>img {
-            height: 50px;
-            width: 50px;
-            margin-left: 20px;
-        }
-        
-        a.little>img {
-            height: 25px;
-            width: 25px;
-            margin: 2px 2px 2px 8px;
-            float: left;           
+        a.vkPhoto>img {
+            margin: 2px;           
         }
     </style>
     <script src="https://vk.com/js/api/openapi.js?159" type="text/javascript"></script>
@@ -111,6 +116,11 @@
         </div>
         <div id="calendarBody"></div>
     </div>
+
+    <div id="morePhoto">
+        
+    </div>
+    
     <script type="text/javascript">
         //import VkModule from "VkModule.js";
         const APPID = 6706434;//id of my app in vk       
