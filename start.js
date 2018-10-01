@@ -10,6 +10,5 @@ app.listen(LISTEN_PORT, '0.0.0.0', () => {
 });
 
 app.get('/', function(req, res) {
-    console.log("send index");
     res.sendFile('index.html', { root: './public' });
 });
