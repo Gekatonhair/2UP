@@ -11,11 +11,15 @@
             background-color: whitesmoke;
         }
         
-        #vk_auth {
-            position: absolute;
+        #vk_auth {           
             margin: 10% calc(50% - 100px);           
         }
-                
+
+        #content{
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+        }        
         .showMore{           
             text-align: center;
             font-size: 2em;
@@ -35,7 +39,7 @@
             display: none;
             margin: 10px calc(50% - 300px);
             background-color: rgb(74,118,168);
-            border-radius: 5px;           
+            border-radius: 5px;                
         }
         
         #calendarHeader {
@@ -58,7 +62,7 @@
             margin-left: 135px;
         }
         
-        #calendarHeader > #month {
+        #calendarHeader > #monthName {
             height: 25px;
             width: 200px;
             text-align: center;
@@ -108,15 +112,16 @@
 
 <body>
     <div id="vk_auth"></div>
-    <div id="calendar">
-        <div id="calendarHeader">
-            <span id="prevMonth" class="monthChanger">←</span>
-            <h2 id="month">Месяц года</h2>
-            <span id="nextMonth" class="monthChanger">→</span>
+    <div id="content">
+        <div id="calendar">
+            <div id="calendarHeader">
+                <span id="prevMonth" class="monthChanger">←</span>
+                <h2 id="monthName">Месяц года</h2>
+                <span id="nextMonth" class="monthChanger">→</span>
+            </div>
+            <div id="calendarBody"></div>
         </div>
-        <div id="calendarBody"></div>
     </div>
-    
     <script type="text/javascript">
         //import VkModule from "VkModule.js";
         const APPID = 6706434;//id of my app in vk       

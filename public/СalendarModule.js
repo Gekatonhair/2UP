@@ -154,26 +154,22 @@ class CalendarModule {
                     link.appendChild(img);
 
                     dayDiv.appendChild(link); 
-                }
+                }//#for friend
             }//#for day
         }//#for month
     }//#drawVkBd 
 
-    changeMonth(monthNumber) {
-        this.selectMonth(monthNumber);
+    changeMonth(monthNumber) {      
         //header
-        let monthNameDiv = document.getElementById('month');
+        let monthNameDiv = document.getElementById('monthName');
         monthNameDiv.innerHTML = `${getMonthNameByNumber(monthNumber)} ${this.getSelectedYear()}`;
         //body
-        let monthDivs = document.getElementsByClassName('month');
-        for (let i = 0; i < monthDivs.length; i++) {
-            let monthDiv = monthDivs[i];
-            if (i === monthNumber) {
-                monthDiv.style.display = "block";
-            } else {
-                monthDiv.style.display = "none";
-            }
-        }
+        let monthDivs = document.getElementsByClassName('month');        
+        let prevMonthDiv = monthDivs[this.getSelectedMonth()];
+        let nextMonthDiv = monthDivs[monthNumber];
+        prevMonthDiv.style.display = "none";
+        nextMonthDiv.style.display = "block";
+        this.selectMonth(monthNumber);      
     }//#changeMonth
 }
 

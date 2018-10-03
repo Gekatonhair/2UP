@@ -1,6 +1,6 @@
 /*export default */
 class VkModule {
-    constructor(appId) {       
+    constructor(appId) {
         this.authDiv = document.getElementById('vk_auth');
 
         VK.init({
@@ -8,76 +8,76 @@ class VkModule {
         });
     }
 
-    authSuccess() {
-        const _this = this;
-        return new Promise((resolve, reject) => {
-            VK.Widgets.Auth("vk_auth", {
-                onAuth: function() {
-                    _this.authDiv.style.display = "none";
-                    resolve();
-                }
-            });
-        })
+
+    showAuthForm(){
+        let content = document.getElementById('content');
+        content.style.opacity = 0;
+        this.authDiv.style.display = "block";
+    }
+
+    hideAuthForm(){
+        let content = document.getElementById('content');
+        content.style.opacity = 1;
+        this.authDiv.style.display = "none";
     }
 
     sessionAvailable() {
-            return new Promise((resolve, reject) => {
-                VK.Auth.getLoginStatus((res) => {
-                    if (res.session) {
-                        this.authDiv.style.display = "none";
-                        resolve();
-                    } else {
-                        const calendar = document.getElementById('calendar');
-                        calendar.style.display = "none";
-                        this.authDiv.style.display = "block";
-                        reject("vk session unavailable");
-                    }
-                });
-            })
-        } //#vkSessionAvailable
+        const _this = this;
+        return new Promise((resolve, reject) => {          
+            VK.Widgets.Auth("vk_auth", {
+                onAuth: function () {
+                    _this.hideAuthForm();                   
+                    resolve();
+                }
+            });
+            //})
+
+            VK.Auth.getLoginStatus((res) => {
+                if (res.session) {
+                    _this.hideAuthForm(); 
+                    resolve();
+                } else {
+                    _this.showAuthForm(); 
+                    reject("vk session unavailable");
+                }
+            });
+        })
+    } //#vkSessionAvailable
 
 
     getFriendsData() {
-            return new Promise((resolve, reject) => {                   
-                    VK.Api.call(
-                            "friends.get", {
-                                order: "bdate",
-                                fields: "bdate,domain,photo_50",
-                                version: '5.85'
-                            },
-                            function(data) {
-                                if (data.response) {                                    
-                                    resolve(data.response)
-                                } else {
-                                    reject(data.error);
-                                }
-                            }
-                        ) //#VK.Api.call
-                }) //#Promise
-        } //#getVKFriendsBdate
+        return new Promise((resolve, reject) => {
+            VK.Api.call(
+                "friends.get", {
+                    order: "bdate",
+                    fields: "bdate,domain,photo_50",
+                    version: '5.85'
+                },
+                function (data) {
+                    if (data.response) {
+                        resolve(data.response)
+                    } else {
+                        reject(data.error);
+                    }
+                }
+            ) //#VK.Api.call
+        }) //#Promise
+    } //#getVKFriendsBdate
 
 
     getFriends() {
         const _this = this;
         return new Promise((resolve, reject) => {
-            this.authSuccess().then(() => {
+            _this.sessionAvailable()
+                .then(() => {
                     return this.getFriendsData();
                 })
                 .then((data) => {
                     resolve(data);
                 })
-
-            this.sessionAvailable()
-                .then(() => {
-                    return this.getFriendsData();
-                })
-                .then((data) => {
-                    resolve(data);                   
-                })
-                .catch((error) => {
-                    console.error("Error!!!");
-                    console.error(error);
+                .catch((error) => {                    
+                    reject(error);
                 });
-        })
+        })//#return promose
     }
 } //#class VK
