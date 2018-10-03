@@ -29,8 +29,7 @@ class VkModule {
                     _this.hideAuthForm();                   
                     resolve();
                 }
-            });
-            //})
+            });           
 
             VK.Auth.getLoginStatus((res) => {
                 if (res.session) {
